@@ -38,7 +38,7 @@ function edgeShadow() {
   const x = c.getContext('2d');
   [[0, 0, 256, 0], [0, 0, 0, 512]].forEach(([a, b, cc, d], i) => {
     const len = i ? 512 : 256, g = x.createLinearGradient(a, b, cc, d), e = 18 / len;
-    g.addColorStop(0, 'rgba(0,0,0,.55)'); g.addColorStop(e, 'rgba(0,0,0,0)'); g.addColorStop(1 - e, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.55)');
+    g.addColorStop(0, 'rgba(0,0,0,.32)'); g.addColorStop(e, 'rgba(0,0,0,0)'); g.addColorStop(1 - e, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.32)');
     x.fillStyle = g; x.fillRect(0, 0, 256, 512);
   });
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;

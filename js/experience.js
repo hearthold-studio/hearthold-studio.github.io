@@ -4,6 +4,7 @@
 import * as THREE from 'three';
 import { createPhone } from './phone.js';
 import { studioEnvironment } from './studio-env.js';
+import { createWorlds } from './worlds.js';
 
 const story = document.querySelector('.story'), canvas = document.querySelector('#stage');
 const lowPower = (navigator.hardwareConcurrency || 4) <= 4 && matchMedia('(pointer: coarse)').matches;
@@ -52,6 +53,8 @@ const { screenMat, screen, z: front } = phone.userData;
 const fadeMat = new THREE.MeshBasicMaterial({ map: screens.museum, color: new THREE.Color(.9, .9, .9), transparent: true, opacity: 0, toneMapped: false, depthWrite: false });
 const fadeScr = new THREE.Mesh(screen.geometry, fadeMat); fadeScr.position.z = front + .019; phone.add(fadeScr);
 const rig = new THREE.Group(); rig.add(phone); scene.add(rig);
+const worlds = createWorlds(phone, { front, narrow: () => narrow });
+const hemi = new THREE.HemisphereLight('#dfe4ff', '#3a2030', 0); scene.add(hemi);
 
 // écran First Light dessiné en code (les apps sont en préparation)
 function firstLightScreen() {
@@ -180,6 +183,8 @@ function apply(p, dt) {
   sunL.intensity = 3 * dawn + 1.2 * day;
   key.intensity = .5 + 1.4 * day;
   scene.environmentIntensity = .7 + .5 * day;
+  hemi.intensity = 1.6 * night + .8 * day;
+  worlds.update(p, time, dt);
 
   // braises : montent doucement, puis filent vers la caméra pendant la plongée, s'éteignent ensuite
   const warp = range(p, .04, .16) * (1 - range(p, .2, .26));
@@ -237,4 +242,4 @@ function frame(now) {
 requestAnimationFrame(frame);
 
 // banc d'essai : forcer une position (captures automatiques)
-window.__exp = { set(v) { p = target = v; time = 2; apply(v, 1 / 60); renderer.render(scene, camera); } };
+window.__exp = { preload: () => worlds.preload(), set(v) { p = target = v; time = 2; apply(v, 1 / 60); renderer.render(scene, camera); } };
