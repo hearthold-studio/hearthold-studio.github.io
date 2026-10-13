@@ -92,6 +92,6 @@ export function createPhone({ color = '#4c0c19', screen } = {}) {
   };
   btn(.45, 4, -1); btn(1, 2.6, -1); btn(1, 1.2, -1); btn(1.7, 2.7, 1); btn(.8, -1.5, 1);
 
-  g.userData = { screenMat, titanium };
+  g.userData = { screenMat, titanium, screen: scr, z };
   return g;
 }
