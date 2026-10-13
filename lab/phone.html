@@ -11,7 +11,7 @@
 <script type="module">
 // Banc d'essai du téléphone : ?ry= (rotation verticale, degrés) &rx= &spin=1 (tourne tout seul)
 import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/RoomEnvironment.js';
+import { studioEnvironment } from '../js/studio-env.js';
 import { createPhone } from '../js/phone.js';
 
 const q = new URLSearchParams(location.search), deg = (k, d) => (+(q.get(k) ?? d)) * Math.PI / 180;
@@ -24,15 +24,13 @@ document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#0b0c10');
-const pm = new THREE.PMREMGenerator(renderer);
-scene.environment = pm.fromScene(new RoomEnvironment(), .04).texture;
-scene.environmentIntensity = .9;
+scene.environment = studioEnvironment(renderer);
 
-const key = new THREE.DirectionalLight('#ffffff', 2.2); key.position.set(-6, 8, 10); scene.add(key);
+const key = new THREE.DirectionalLight('#ffffff', 1.2); key.position.set(-6, 8, 10); scene.add(key);
 const fire = new THREE.PointLight('#ff8a3c', 120, 40); fire.position.set(9, -4, 6); scene.add(fire);
 const moon = new THREE.PointLight('#7f8cff', 80, 40); moon.position.set(-10, 6, -6); scene.add(moon);
 
-const cam = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, .1, 200);
+const cam = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 5, 100);
 cam.position.set(0, 0, 38);
 
 const tex = await new THREE.TextureLoader().loadAsync('../img/screens/' + (q.get('screen') || 'zoo-1') + '.webp');
