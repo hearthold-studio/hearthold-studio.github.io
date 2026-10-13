@@ -13,7 +13,7 @@ float noise(vec2 p) {
   vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
   return mix(mix(hash(i), hash(i + vec2(1, 0)), f.x), mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y);
 }
-float fbm(vec2 p) { float v = 0.0, a = 0.5; for (int i = 0; i < 5; i++) { v += a * noise(p); p = p * 2.03 + 17.0; a *= 0.5; } return v; }
+float fbm(vec2 p) { float v = 0.0, a = 0.5; for (int i = 0; i < OCT; i++) { v += a * noise(p); p = p * 2.03 + 17.0; a *= 0.5; } return v; }
 void main() {
   vec2 uv = vUv; float y = uv.y, x = uv.x - 0.5;
   float t = uTime * 1.25 + uSeed;
@@ -33,7 +33,7 @@ void main() {
   gl_FragColor = vec4(col * shape * 1.6 * uAlpha, 1.0);
 }`;
 
-export function createHearth() {
+export function createHearth({ low = false } = {}) {
   const g = new THREE.Group();
 
   // arche : deux montants, un demi-cercle, et la base, au trait fin
@@ -53,8 +53,8 @@ export function createHearth() {
   [arch, sill].forEach((m) => { m.geometry.setDrawRange(0, 0); g.add(m); });
 
   // flamme : deux couches décalées pour donner du volume
-  const flames = [[0, 0, 5.4, 6.6], [7.3, .05, 4.2, 5.4], [3.1, -.9, 3, 4.2], [5.7, .9, 3, 4]].map(([seed, ox, w, h], i) => {
-    const mat = new THREE.ShaderMaterial({ vertexShader: FLAME_VERT, fragmentShader: FLAME_FRAG, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+  const flames = [[0, 0, 5.4, 6.6], [7.3, .05, 4.2, 5.4], [3.1, -.9, 3, 4.2], [5.7, .9, 3, 4]].slice(0, low ? 2 : 4).map(([seed, ox, w, h], i) => {
+    const mat = new THREE.ShaderMaterial({ vertexShader: FLAME_VERT, fragmentShader: (low ? '#define OCT 3\n' : '#define OCT 5\n') + FLAME_FRAG, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
       uniforms: { uTime: { value: 0 }, uAlpha: { value: 0 }, uSeed: { value: seed } } });
     const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
     m.position.set(ox, base + h / 2 - .05, i * .03); g.add(m);

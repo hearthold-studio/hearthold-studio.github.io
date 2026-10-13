@@ -130,5 +130,14 @@ export function createWorlds(phone, { front, narrow }) {
       c.mat.opacity = Math.min(1, inn * 3) * (1 - out);
     }
   }
-  return { update, preload() {} };
+  // préparation à l'avance (pendant l'ouverture) : compile les matières et envoie les images à la carte graphique,
+  // pour éviter un accroc la première fois qu'un îlot apparaît
+  function warm(renderer, scene, camera) {
+    const shown = [...islands.map((i) => i.g), ...cards.map((c) => c.s)];
+    shown.forEach((o) => { o.visible = true; });
+    root.traverse((o) => { const ms = o.material ? [].concat(o.material) : []; ms.forEach((m) => { if (m.map) renderer.initTexture(m.map); }); });
+    renderer.compile(scene, camera);
+    shown.forEach((o) => { o.visible = false; });
+  }
+  return { update, warm, preload() {} };
 }

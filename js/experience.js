@@ -31,7 +31,20 @@ const css = (a) => `rgb(${a.map((x) => Math.round(x * 255)).join(',')})`;
 
 // ---------- rendu ----------
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: !lowPower, alpha: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(devicePixelRatio, lowPower ? 1.25 : 1.75));
+// définition adaptative : baisse si l'appareil peine (< 50 i/s), remonte quand il a de la marge (> 58 i/s)
+const DPR_MAX = Math.min(devicePixelRatio, lowPower ? 1.5 : 2), DPR_MIN = Math.min(1, DPR_MAX);
+let dpr = Math.min(DPR_MAX, lowPower ? 1.25 : 1.75), frames = 0, spent = 0, good = 0;
+renderer.setPixelRatio(dpr);
+function adapt(dt) {
+  frames++; spent += dt;
+  if (spent < 1) return;
+  const fps = frames / spent; frames = 0; spent = 0;
+  const capped = fps > 27 && fps < 33; // écran bridé à 30 i/s (mode économie d'énergie) : ce n'est pas un manque de puissance
+  if (fps < 50 && !capped && dpr > DPR_MIN) { dpr = Math.max(DPR_MIN, dpr - .25); good = 0; }
+  else if (fps > 58 && dpr < DPR_MAX && ++good >= 3) { dpr = Math.min(DPR_MAX, dpr + .25); good = 0; }
+  else return;
+  renderer.setPixelRatio(dpr); renderer.setSize(innerWidth, innerHeight, false);
+}
 renderer.toneMapping = THREE.NeutralToneMapping;
 const scene = new THREE.Scene();
 scene.environment = studioEnvironment(renderer);
@@ -82,7 +95,7 @@ function firstLightScreen() {
 }
 
 // ---------- le foyer de l'ouverture ----------
-const hearth = createHearth(); scene.add(hearth.group);
+const hearth = createHearth({ low: lowPower }); scene.add(hearth.group);
 function softDot() {
   const c = document.createElement('canvas'); c.width = c.height = 64;
   const x = c.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
@@ -225,8 +238,16 @@ function frame(now) {
   p += (target - p) * (1 - Math.exp(-dt * 7));
   apply(p, dt);
   renderer.render(scene, camera);
+  adapt(dt);
 }
 requestAnimationFrame(frame);
+// préparation de la carte graphique une fois les images chargées (pendant que l'ouverture se dessine)
+THREE.DefaultLoadingManager.onLoad = () => {
+  const run = () => { worlds.warm(renderer, scene, camera); Object.values(screens).forEach((t) => renderer.initTexture(t)); };
+  (window.requestIdleCallback || setTimeout)(run, { timeout: 1500 });
+};
 
 // banc d'essai : forcer une position (captures automatiques)
-window.__exp = { preload: () => worlds.preload(), set(v) { p = target = v; time = 2; clock = 4; apply(v, 1 / 60); renderer.render(scene, camera); } };
+window.__exp = { dpr: () => dpr, forceDpr(v) { dpr = v; renderer.setPixelRatio(v); renderer.setSize(innerWidth, innerHeight, false); },
+  // temps de calcul d'une image (processeur + carte graphique) à une position donnée, en ms
+  bench(v, n = 30) { const gl = renderer.getContext(), px = new Uint8Array(4), sync = () => gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); this.set(v); sync(); const t0 = performance.now(); for (let i = 0; i < n; i++) { time += 1 / 60; apply(v, 1 / 60); renderer.render(scene, camera); sync(); } return (performance.now() - t0) / n; }, preload: () => worlds.preload(), set(v) { p = target = v; time = 2; clock = 4; apply(v, 1 / 60); renderer.render(scene, camera); } };
