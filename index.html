@@ -16,20 +16,48 @@
 <link rel="stylesheet" href="style.css">
 <script src="i18n.js"></script>
 <script src="site.js"></script>
+<script src="motion.js" defer></script>
 </head>
 <body>
 <header class="nav"></header>
 <main>
 
-<div class="wrap hero">
-  <span class="eyebrow" data-i="h1">Independent house of studios · France</span>
-  <h1 data-i="h2">A warm hearth for <em>studios that make things to last.</em></h1>
-  <p class="lead" data-i="h3">Hearthold brings together small independent studios, each with its own craft: cozy games, useful apps. One house, the same care, the same honesty.</p>
-  <div class="btns">
-    <a class="btn solid" href="studios.html"><span data-i="h4">Meet our studios</span> →</a>
-    <a class="btn" href="catalogue.html" data-i="h5">See everything we make</a>
+<div class="hero-wrap">
+<div class="aura" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="wrap hero home">
+  <div>
+    <span class="eyebrow" data-i="h1">Independent house of studios · France</span>
+    <h1 data-i="h2">A warm hearth for <em>studios that make things to last.</em></h1>
+    <p class="lead" data-i="h3">Hearthold brings together small independent studios, each with its own craft: cozy games, useful apps. One house, the same care, the same honesty.</p>
+    <div class="btns">
+      <a class="btn solid" href="studios.html"><span data-i="h4">Meet our studios</span> →</a>
+      <a class="btn" href="catalogue.html" data-i="h5">See everything we make</a>
+    </div>
+  </div>
+  <div class="emblem" aria-hidden="true">
+    <canvas></canvas>
+    <svg viewBox="0 0 200 200">
+      <defs><radialGradient id="g" cx=".5" cy=".62" r=".5"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient></defs>
+      <circle class="halo" cx="100" cy="122" r="90" fill="url(#g)"/>
+      <path class="arch" d="M48 168V98a52 52 0 0 1 104 0v70" pathLength="1"/>
+      <path class="arch" d="M34 168h132" pathLength="1"/>
+      <g class="fire">
+        <path class="f1" d="M100 70c15 18 27 30 27 48a27 27 0 0 1-54 0c0-12 6-21 12-27 0 9 3 15 9 18-3-15 0-27 6-39z"/>
+        <path class="f2" d="M100 106c6 6 12 12 12 19.5a12 12 0 0 1-24 0c0-6 3-9 6-12 0 3 3 6 6 6-1.5-4.8-1.2-9 0-13.5z"/>
+      </g>
+    </svg>
   </div>
 </div>
+</div>
+
+<div class="marquee" aria-hidden="true"><div><span data-i="m1">Craft</span>✦<span data-i="m2">Honesty</span>✦<span data-i="m3">Built to last</span>✦<span data-i="m4">Games</span>✦<span data-i="m5">Apps</span>✦<span data-i="m1">Craft</span>✦<span data-i="m2">Honesty</span>✦<span data-i="m3">Built to last</span>✦<span data-i="m4">Games</span>✦<span data-i="m5">Apps</span>✦</div></div>
+
+<section class="stats-s"><div class="wrap stats">
+  <div><b data-count="2">2</b><span data-i="x1">studios</span></div>
+  <div><b data-count="3">3</b><span data-i="x2">games in the Lulu series</span></div>
+  <div><b data-count="7">7</b><span data-i="x3">languages</span></div>
+  <div><b data-count="0">0</b><span data-i="x4">trackers on this site</span></div>
+</div></section>
 
 <section class="alt"><div class="wrap">
   <div class="title">

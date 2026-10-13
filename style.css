@@ -116,3 +116,99 @@ footer .base { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--
 /* logos sur fond de même couleur : léger liseré pour garder la forme de l'icône */
 .studio.moon img.mark { box-shadow: 0 0 0 1px rgba(255,255,255,.2), 0 10px 28px rgba(0,0,0,.35); }
 @media (prefers-color-scheme: dark) { .brand img { border-radius: 8px; box-shadow: 0 0 0 1px var(--line); } }
+
+/* ================= motion design ================= */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: vt-out .35s cubic-bezier(.4,0,.2,1) both; }
+::view-transition-new(root) { animation: vt-in .5s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-12px) scale(.99); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(18px); } }
+
+.progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 20; transform-origin: 0 50%; transform: scaleX(0);
+  background: linear-gradient(90deg, var(--ember), #ffc857); pointer-events: none; }
+.nav .wrap { transition: height .35s cubic-bezier(.2,.8,.2,1); }
+.nav.small .wrap { height: 54px; }
+
+/* titres mot à mot */
+.anim .words .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .12em; margin-bottom: -.12em; }
+.anim .words .w > span { display: inline-block; transform: translateY(110%) rotate(4deg); transition: transform 1s cubic-bezier(.16,1,.3,1) calc(var(--i) * 55ms); }
+.anim .words.in .w > span { transform: none; }
+
+/* apparitions */
+.anim .rv { opacity: 0; transform: translateY(34px) scale(.97); transition: opacity .9s cubic-bezier(.2,.8,.2,1) var(--d, 0s), transform 1s cubic-bezier(.16,1,.3,1) var(--d, 0s); }
+.anim .rv.in { opacity: 1; transform: none; }
+.anim .rv.in.hot { transition: transform .15s ease-out, opacity .9s; }
+
+/* reflet qui suit le curseur */
+.card, .app { position: relative; overflow: hidden; }
+.card::after, .app::after, .studio::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--ember) 16%, transparent), transparent 60%); }
+.studio::after { background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.18), transparent 55%); }
+.hot::after { opacity: 1; }
+.btn { transition: transform .25s cubic-bezier(.2,.8,.2,1), background .2s; }
+
+/* héros d'accueil : halo, foyer animé */
+.hero-wrap { position: relative; overflow: hidden; }
+.aura { position: absolute; inset: -20% -10% auto; height: 120%; pointer-events: none; z-index: 0; }
+.aura i { position: absolute; border-radius: 50%; opacity: .5; will-change: transform;
+  background: radial-gradient(circle, color-mix(in srgb, var(--ember) 45%, transparent), transparent 65%); }
+.aura i:nth-child(1) { width: 620px; height: 620px; right: -120px; top: 0; animation: drift 18s ease-in-out infinite alternate; }
+.aura i:nth-child(2) { width: 420px; height: 420px; right: 260px; top: 280px; opacity: .3; background: radial-gradient(circle, rgba(255,200,87,.5), transparent 65%); animation: drift 14s ease-in-out -6s infinite alternate-reverse; }
+.aura i:nth-child(3) { width: 520px; height: 520px; left: -220px; top: -120px; opacity: .22; background: radial-gradient(circle, rgba(90,110,255,.45), transparent 65%); animation: drift 22s ease-in-out -3s infinite alternate; }
+@keyframes drift { to { transform: translate3d(-80px, 60px, 0) scale(1.15); } }
+.hero.home { position: relative; z-index: 1; display: grid; grid-template-columns: 1.25fr 1fr; align-items: center; gap: 24px; }
+@media (max-width: 860px) { .hero.home { grid-template-columns: 1fr; } .emblem { max-width: 190px; margin: 0 auto -8px; order: -1; } .hero.home { padding-top: 32px; } }
+.emblem { position: relative; aspect-ratio: 1; width: 100%; }
+.emblem svg, .emblem canvas { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.emblem canvas { z-index: 2; pointer-events: none; }
+.emblem .arch { fill: none; stroke: var(--ink); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.anim .emblem .arch { stroke-dashoffset: 1; animation: draw 1.6s cubic-bezier(.65,0,.35,1) .2s forwards; }
+.anim .emblem .arch + .arch { animation-delay: .9s; animation-duration: .8s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.emblem .f1 { fill: var(--ember); }
+.emblem .f2 { fill: #ffc857; }
+.emblem .fire { transform-origin: 100px 145px; transform-box: view-box; }
+.anim .emblem .fire { transform: scale(0); animation: ignite .9s cubic-bezier(.34,1.56,.64,1) 1.5s forwards; }
+.anim .emblem .f1 { transform-origin: 100px 145px; transform-box: view-box; animation: flick 2.4s ease-in-out 2.4s infinite; }
+.anim .emblem .f2 { transform-origin: 100px 137px; transform-box: view-box; animation: flick 1.6s ease-in-out 2.4s infinite reverse; }
+@keyframes ignite { to { transform: scale(1); } }
+@keyframes flick { 0%,100% { transform: scale(1,1) skewX(0); } 25% { transform: scale(.96,1.06) skewX(2deg); } 50% { transform: scale(1.03,.95) skewX(-1.5deg); } 75% { transform: scale(.98,1.04) skewX(1deg); } }
+.emblem .halo { transform-origin: 100px 122px; transform-box: view-box; opacity: 0; }
+.anim .emblem .halo { animation: halo-in 1s ease 1.6s forwards, pulse 3.2s ease-in-out 2.6s infinite; }
+html:not(.anim) .emblem .halo { opacity: 1; }
+@keyframes halo-in { to { opacity: 1; } }
+@keyframes pulse { 50% { transform: scale(1.08); opacity: .75; } }
+
+/* bandeau défilant */
+.marquee { overflow: hidden; border-block: 1px solid var(--line); padding: 18px 0; background: var(--bg); }
+.marquee > div { display: flex; width: max-content; align-items: center; font: 700 clamp(1.6rem, 4vw, 2.8rem)/1 var(--sans); letter-spacing: -.02em; color: var(--ember); animation: marquee 28s linear infinite; }
+.marquee > div > span { color: var(--ink); margin: 0 22px; }
+.marquee > div > span:nth-of-type(even) { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+.marquee:hover > div { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* chiffres */
+.stats-s { padding: 56px 0; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 700px) { .stats { grid-template-columns: 1fr 1fr; } }
+.stats div { border-left: 2px solid var(--ember); padding-left: 16px; }
+.stats b { display: block; font: 800 clamp(2.6rem, 6vw, 4rem)/1 var(--sans); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.stats b.pop { animation: pop .5s cubic-bezier(.34,1.56,.64,1); }
+@keyframes pop { 50% { transform: scale(1.15); } }
+.stats span { color: var(--ink2); font-size: .95rem; }
+
+/* cartes studio : étoiles qui scintillent, soleil qui tourne */
+.studio.moon::before { content: ""; position: absolute; width: 2px; height: 2px; top: 0; left: 0; border-radius: 50%; background: transparent; pointer-events: none;
+  box-shadow: 40px 60px #fff, 120px 30px #fff, 210px 90px #fff, 300px 40px #fff, 380px 120px #fff, 90px 160px #fff, 260px 190px #fff, 350px 230px #fff, 170px 250px #fff, 60px 280px #fff, 420px 60px #fff, 330px 300px #fff;
+  animation: twinkle 3.5s ease-in-out infinite alternate; opacity: .7; }
+@keyframes twinkle { 0% { opacity: .25; } 100% { opacity: .9; } }
+.studio.dawn::before { content: ""; position: absolute; width: 640px; height: 640px; right: -320px; bottom: -320px; pointer-events: none; opacity: .5;
+  background: repeating-conic-gradient(from 0deg, rgba(232,137,58,.18) 0 6deg, transparent 6deg 18deg); border-radius: 50%;
+  -webkit-mask: radial-gradient(circle, #000 30%, transparent 70%); mask: radial-gradient(circle, #000 30%, transparent 70%); animation: spin 60s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.studio > * { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee > div, .aura i, .studio::before, .emblem * { animation: none !important; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}

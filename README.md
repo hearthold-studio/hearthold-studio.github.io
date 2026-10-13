@@ -8,3 +8,4 @@ Publication prévue : GitHub Pages, dépôt `hearthold-studio/hearthold-studio.g
 - `img/apple-touch-icon.png` et `img/og.png` sont générés à partir de `img/hearthold.svg`.
 - Mentions légales : l'adresse reste à compléter dans `legal.html`.
 - Ne pas toucher au site Moon Beam (moonbeamstudio.github.io) : fiches App Store et app-ads.txt en dépendent.
+- Animations : `motion.js` + fin de `style.css` (transform/opacity uniquement, pause hors écran, coupées si « réduire les animations »).

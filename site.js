@@ -9,6 +9,7 @@
     for (var i = 0; i < ls.length; i++) { var c = (ls[i] || '').slice(0, 2).toLowerCase(); if (SUP.indexOf(c) >= 0) { l = c; break; } }
   }
   de.lang = l;
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) de.classList.add('anim');
 
   var HEADER =
     '<div class="wrap"><a class="brand" href="/"><img src="/img/hearthold.svg" alt="" width="32" height="32">Hearthold</a>' +
@@ -34,6 +35,7 @@
     });
     document.querySelectorAll('.lang select').forEach(function (s) { s.value = l; });
     de.lang = l;
+    document.dispatchEvent(new Event('langchange'));
   }
 
   document.addEventListener('DOMContentLoaded', function () {

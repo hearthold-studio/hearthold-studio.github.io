@@ -80,6 +80,9 @@ window.I18N = {
 "l12": "Les politiques de confidentialité de nos jeux et apps sont publiées sur le site de chaque studio, par exemple la <a href=\"https://moonbeamstudio.github.io/privacy.html\">politique de confidentialité de Moon Beam Studio</a>.",
 "l13": "Si vous nous écrivez, votre e-mail sert uniquement à vous répondre. Vous pouvez demander sa suppression à tout moment.",
 
+"m1": "Savoir-faire", "m2": "Honnêteté", "m3": "Fait pour durer", "m4": "Jeux", "m5": "Apps",
+"x1": "studios", "x2": "jeux dans la série Lulu", "x3": "langues", "x4": "traceur sur ce site",
+
 "e1": "Cette pièce est vide.", "e2": "La page que vous cherchez n'existe pas ou a été déplacée.", "e3": "Retour à la maison"
 }
 };
