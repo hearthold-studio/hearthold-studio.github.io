@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { createPhone } from './phone.js';
 import { studioEnvironment } from './studio-env.js';
 import { createWorlds } from './worlds.js';
+import { createHearth } from './hearth.js';
 
 const story = document.querySelector('.story'), canvas = document.querySelector('#stage');
 const lowPower = (navigator.hardwareConcurrency || 4) <= 4 && matchMedia('(pointer: coarse)').matches;
@@ -80,7 +81,8 @@ function firstLightScreen() {
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 
-// ---------- particules : braises puis étincelles ----------
+// ---------- le foyer de l'ouverture ----------
+const hearth = createHearth(); scene.add(hearth.group);
 function softDot() {
   const c = document.createElement('canvas'); c.width = c.height = 64;
   const x = c.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
@@ -88,17 +90,6 @@ function softDot() {
   x.fillStyle = g; x.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(c);
 }
 const dot = softDot();
-const N = lowPower ? 260 : 520;
-const ePos = new Float32Array(N * 3), eVel = new Float32Array(N * 3), eLife = new Float32Array(N);
-const resetEmber = (i, spread = 1) => {
-  ePos[i * 3] = (Math.random() - .5) * 6 * spread; ePos[i * 3 + 1] = -8 + Math.random() * 3; ePos[i * 3 + 2] = (Math.random() - .5) * 10;
-  eVel[i * 3] = (Math.random() - .5) * .02; eVel[i * 3 + 1] = .03 + Math.random() * .06; eVel[i * 3 + 2] = (Math.random() - .5) * .02;
-  eLife[i] = Math.random();
-};
-for (let i = 0; i < N; i++) { resetEmber(i); ePos[i * 3 + 1] = -8 + Math.random() * 22; }
-const emberGeo = new THREE.BufferGeometry(); emberGeo.setAttribute('position', new THREE.BufferAttribute(ePos, 3));
-const emberMat = new THREE.PointsMaterial({ map: dot, color: '#ff9a4a', size: .35, transparent: true, opacity: 1, blending: THREE.AdditiveBlending, depthWrite: false });
-const embers = new THREE.Points(emberGeo, emberMat); scene.add(embers);
 
 // ---------- ciel de nuit : étoiles, lune ; aube : soleil ----------
 const S = lowPower ? 700 : 1400, sPos = new Float32Array(S * 3);
@@ -133,7 +124,7 @@ const SKY = [ // [p, haut, bas, encre du texte]
 
 // ---------- chapitres de texte (apparaissent sur leur plage de p) ----------
 const chapters = [...document.querySelectorAll('[data-at]')].map((el) => { const [a, b] = el.dataset.at.split(',').map(Number); return { el, a, b }; });
-const intro = document.querySelector('.intro');
+const intro = document.querySelector('.intro'), flash = document.querySelector('.flash'), hint = document.querySelector('.hint');
 
 // ---------- mise en page selon l'écran ----------
 let narrow = false;
@@ -146,7 +137,7 @@ function resize() {
 addEventListener('resize', resize); resize();
 
 // ---------- la chronologie ----------
-let p = 0, target = 0, time = 0, pointerX = 0, pointerY = 0;
+let p = 0, target = 0, time = 0, clock = 0, pointerX = 0, pointerY = 0;
 function readScroll() {
   const r = story.getBoundingClientRect(), total = r.height - innerHeight;
   target = clamp(-r.top / total);
@@ -162,6 +153,7 @@ function apply(p, dt) {
   const rot = track([[0, [.3, Math.PI * 3, .2]], [.22, [-.08, Math.PI * 1.1, .05]], [.3, [-.06, -.32, 0]], [.55, [-.06, -.42, 0]],
     [.64, [-.05, -1.25, 0]], [.72, [-.05, .34, 0]], [.86, [-.05, .42, 0]], [1, [-1.1, .2, .3]]], p);
   const float = Math.sin(time * .9) * .18;
+  rig.visible = p > .085;
   rig.position.set(pos[0], pos[1] + float * range(p, .22, .3), pos[2]);
   rig.rotation.set(rot[0] + pointerY * .08, rot[1] + pointerX * .14, rot[2]);
   if (narrow) rig.position.y += track([[.25, 0], [.3, 3.2]], p);
@@ -186,20 +178,15 @@ function apply(p, dt) {
   hemi.intensity = 1.6 * night + .8 * day;
   worlds.update(p, time, dt);
 
-  // braises : montent doucement, puis filent vers la caméra pendant la plongée, s'éteignent ensuite
-  const warp = range(p, .04, .16) * (1 - range(p, .2, .26));
-  emberMat.opacity = 1 - range(p, .24, .32);
-  emberMat.size = .35 + warp * .5;
-  if (emberMat.opacity > 0) {
-    for (let i = 0; i < N; i++) {
-      const k = i * 3;
-      ePos[k] += eVel[k] * dt * 60 + Math.sin(time * 2 + i) * .004;
-      ePos[k + 1] += eVel[k + 1] * dt * 60 * (1 - warp * .7);
-      ePos[k + 2] += warp * 1.6 * dt * 60;
-      if (ePos[k + 1] > 16 || ePos[k + 2] > 40) resetEmber(i, 1 + warp * 3);
-    }
-    emberGeo.attributes.position.needsUpdate = true;
+  // foyer : la caméra traverse l'arche et la flamme pendant la plongée
+  const dive = range(p, 0, .13);
+  hearth.group.visible = p < .135;
+  if (hearth.group.visible) {
+    hearth.group.position.set(0, narrow ? 2.2 : 1.4, track([[0, 0], [.05, 5], [.13, 52]], p));
+    hearth.group.scale.setScalar(narrow ? .85 : 1);
+    hearth.update(clock, dt, dive);
   }
+  flash.style.opacity = range(p, .1, .122) * (1 - range(p, .124, .15));
 
   // ciel : étoiles, lune qui monte, soleil qui se lève derrière le téléphone
   starMat.opacity = night * .9 * (.85 + .15 * Math.sin(time * 1.7));
@@ -214,9 +201,9 @@ function apply(p, dt) {
   sky.style.setProperty('--top', css(mix(t0, t1))); sky.style.setProperty('--bottom', css(mix(b0, b1)));
   document.documentElement.style.setProperty('--ink', css(mix(i0, i1)));
 
-  // plongée : le foyer grossit et s'efface, puis les chapitres apparaissent à leur tour
-  const dive = range(p, 0, .12);
-  intro.style.transform = `scale(${1 + dive * dive * 9})`; intro.style.opacity = 1 - range(p, .05, .11);
+  // titre d'ouverture : s'efface vers le haut dès qu'on commence à défiler
+  hint.style.visibility = p > .02 ? 'hidden' : 'visible';
+  intro.style.opacity = 1 - range(p, .015, .06); intro.style.transform = `translateY(${-range(p, 0, .06) * 60}px)`;
   for (const c of chapters) {
     const len = c.b - c.a, v = range(p, c.a, c.a + len * .2) * (1 - range(p, c.b - len * .2, c.b));
     c.el.style.opacity = v; c.el.style.transform = `translateY(${(1 - v) * 30}px)`;
@@ -234,7 +221,7 @@ function frame(now) {
   requestAnimationFrame(frame);
   const dt = Math.min(.05, (now - last) / 1000); last = now;
   if (!visible || document.hidden) return;
-  time += dt;
+  time += dt; clock += dt;
   p += (target - p) * (1 - Math.exp(-dt * 7));
   apply(p, dt);
   renderer.render(scene, camera);
@@ -242,4 +229,4 @@ function frame(now) {
 requestAnimationFrame(frame);
 
 // banc d'essai : forcer une position (captures automatiques)
-window.__exp = { preload: () => worlds.preload(), set(v) { p = target = v; time = 2; apply(v, 1 / 60); renderer.render(scene, camera); } };
+window.__exp = { preload: () => worlds.preload(), set(v) { p = target = v; time = 2; clock = 4; apply(v, 1 / 60); renderer.render(scene, camera); } };
