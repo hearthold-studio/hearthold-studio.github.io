@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Labo · téléphone</title>
+<style>html,body{margin:0;height:100%;background:#0b0c10}canvas{display:block;width:100%;height:100%}</style>
+<script type="importmap">{"imports":{"three":"../vendor/three/three.module.min.js","three/addons/":"../vendor/three/addons/"}}</script>
+</head>
+<body>
+<script type="module">
+// Banc d'essai du téléphone : ?ry= (rotation verticale, degrés) &rx= &spin=1 (tourne tout seul)
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/RoomEnvironment.js';
+import { createPhone } from '../js/phone.js';
+
+const q = new URLSearchParams(location.search), deg = (k, d) => (+(q.get(k) ?? d)) * Math.PI / 180;
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.NeutralToneMapping;
+renderer.toneMappingExposure = 1.0;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#0b0c10');
+const pm = new THREE.PMREMGenerator(renderer);
+scene.environment = pm.fromScene(new RoomEnvironment(), .04).texture;
+scene.environmentIntensity = .9;
+
+const key = new THREE.DirectionalLight('#ffffff', 2.2); key.position.set(-6, 8, 10); scene.add(key);
+const fire = new THREE.PointLight('#ff8a3c', 120, 40); fire.position.set(9, -4, 6); scene.add(fire);
+const moon = new THREE.PointLight('#7f8cff', 80, 40); moon.position.set(-10, 6, -6); scene.add(moon);
+
+const cam = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, .1, 200);
+cam.position.set(0, 0, 38);
+
+const tex = await new THREE.TextureLoader().loadAsync('../img/screens/' + (q.get('screen') || 'zoo-1') + '.webp');
+tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+const phone = createPhone({ screen: tex, color: q.get('color') || undefined });
+phone.rotation.set(deg('rx', -8), deg('ry', -25), deg('rz', 0));
+scene.add(phone); window.phone = phone; window.render = () => renderer.render(scene, cam);
+
+addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); });
+renderer.setAnimationLoop(() => {
+  if (q.get('spin')) phone.rotation.y += .01;
+  renderer.render(scene, cam);
+  window.done = true;
+});
+</script>
+</body>
+</html>
