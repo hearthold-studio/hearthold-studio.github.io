@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="First Light">
+  <defs><linearGradient id="d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FDF3E1"/><stop offset="1" stop-color="#F7D9A8"/></linearGradient></defs>
+  <rect width="64" height="64" rx="14" fill="url(#d)"/>
+  <path d="M18 42a14 14 0 0 1 28 0z" fill="#E8893A"/>
+  <g stroke="#E8893A" stroke-width="3" stroke-linecap="round"><path d="M32 16v6M16.5 24.5l4 4M47.5 24.5l-4 4M10 36h5M49 36h5"/></g>
+  <path d="M10 46h44" stroke="#3B4A6B" stroke-width="3" stroke-linecap="round"/>
+</svg>

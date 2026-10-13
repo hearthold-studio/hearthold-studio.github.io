@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hearthold-studio.github.io/sitemap.xml
