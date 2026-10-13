@@ -35,7 +35,8 @@ cam.position.set(0, 0, 38);
 
 const tex = await new THREE.TextureLoader().loadAsync('../img/screens/' + (q.get('screen') || 'zoo-1') + '.webp');
 tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
-const phone = createPhone({ screen: tex, color: q.get('color') || undefined });
+const mark = await new THREE.TextureLoader().loadAsync('../img/moonbeam-mark-mask.png');
+const phone = createPhone({ screen: tex, mark, color: q.get('color') || undefined });
 phone.rotation.set(deg('rx', -8), deg('ry', -25), deg('rz', 0));
 scene.add(phone); window.phone = phone; window.render = () => renderer.render(scene, cam);
 

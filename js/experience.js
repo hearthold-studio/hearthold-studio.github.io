@@ -45,10 +45,11 @@ const sunL = new THREE.DirectionalLight('#ffc27a', 0); sunL.position.set(6, -2, 
 const loader = new THREE.TextureLoader();
 const tex = (n) => { const t = loader.load(`/img/screens/${n}.webp`); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
 const screens = { park: tex('park-1'), museum: tex('museum-2'), zoo: tex('zoo-2'), light: firstLightScreen() };
-const phone = createPhone({ screen: screens.park });
+const mark = loader.load('/img/moonbeam-mark-mask.png');
+const phone = createPhone({ screen: screens.park, mark });
 const { screenMat, screen, z: front } = phone.userData;
 // second écran par-dessus pour les fondus enchaînés entre deux jeux
-const fadeMat = new THREE.MeshBasicMaterial({ map: screens.museum, transparent: true, opacity: 0, toneMapped: false, depthWrite: false });
+const fadeMat = new THREE.MeshBasicMaterial({ map: screens.museum, color: new THREE.Color(.9, .9, .9), transparent: true, opacity: 0, toneMapped: false, depthWrite: false });
 const fadeScr = new THREE.Mesh(screen.geometry, fadeMat); fadeScr.position.z = front + .019; phone.add(fadeScr);
 const rig = new THREE.Group(); rig.add(phone); scene.add(rig);
 
@@ -163,7 +164,7 @@ function apply(p, dt) {
   if (narrow) rig.position.y += track([[.25, 0], [.3, 3.2]], p);
 
   // écran : s'allume, enchaîne Park → Museum → Zoo, puis First Light
-  screenMat.color.setScalar(range(p, .24, .3));
+  screenMat.color.setScalar(.9 * range(p, .24, .3));
   const fades = [[.36, .4, screens.park, screens.museum], [.45, .49, screens.museum, screens.zoo], [.66, .7, screens.zoo, screens.light]];
   let a = screens.park, b = screens.museum, f = 0;
   for (const [s0, s1, x, y] of fades) { if (p >= s0) { a = x; b = y; f = range(p, s0, s1); } }

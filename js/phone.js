@@ -32,7 +32,19 @@ function glareTexture() {
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 
-export function createPhone({ color = '#4c0c19', screen } = {}) {
+// ombre douce sur les bords de l'écran (centre transparent)
+function edgeShadow() {
+  const c = document.createElement('canvas'); c.width = 256; c.height = 512;
+  const x = c.getContext('2d');
+  [[0, 0, 256, 0], [0, 0, 0, 512]].forEach(([a, b, cc, d], i) => {
+    const len = i ? 512 : 256, g = x.createLinearGradient(a, b, cc, d), e = 18 / len;
+    g.addColorStop(0, 'rgba(0,0,0,.55)'); g.addColorStop(e, 'rgba(0,0,0,0)'); g.addColorStop(1 - e, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.55)');
+    x.fillStyle = g; x.fillRect(0, 0, 256, 512);
+  });
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+
+export function createPhone({ color = '#4c0c19', screen, mark } = {}) {
   const { w, h, d, r } = SIZE, g = new THREE.Group(), base = new THREE.Color(color);
   const bevel = .09, z = d / 2;
 
@@ -59,8 +71,17 @@ export function createPhone({ color = '#4c0c19', screen } = {}) {
   scr.position.z = z + .016; g.add(scr);
   const island = new THREE.Mesh(flat(2.05, .6, .3), new THREE.MeshBasicMaterial({ color: '#000' }));
   island.position.set(0, sh / 2 - .58, z + .022); g.add(island);
-  const glare = new THREE.Mesh(flat(sw, sh, r - .2, 64), new THREE.MeshBasicMaterial({ map: glareTexture(), transparent: true, opacity: .14, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const glare = new THREE.Mesh(flat(sw, sh, r - .2, 64), new THREE.MeshBasicMaterial({ map: glareTexture(), transparent: true, opacity: .05, blending: THREE.AdditiveBlending, depthWrite: false }));
   glare.position.z = z + .026; g.add(glare);
+  // ombre intérieure sur les bords de l'écran : donne de la profondeur et du contraste à l'image
+  const inner = new THREE.Mesh(flat(sw, sh, r - .2, 64), new THREE.MeshBasicMaterial({ map: edgeShadow(), transparent: true, depthWrite: false, toneMapped: false }));
+  inner.position.z = z + .02; g.add(inner);
+
+  // logo Moon Beam incrusté au dos : brillant sur le verre dépoli, comme un logo gravé
+  if (mark) {
+    const logo = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 3.4), new THREE.MeshPhysicalMaterial({ color: base.clone().multiplyScalar(1.7), metalness: .85, roughness: .16, alphaMap: mark, transparent: true, depthWrite: false }));
+    logo.rotation.y = Math.PI; logo.position.set(0, -.3, -z - .006); g.add(logo);
+  }
 
   // bloc photo en relief, en haut à gauche vu de dos
   const cam = new THREE.Group(), bw = 3.3;
