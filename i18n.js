@@ -83,6 +83,12 @@ window.I18N = {
 "m1": "Savoir-faire", "m2": "Honnêteté", "m3": "Fait pour durer", "m4": "Jeux", "m5": "Apps",
 "x1": "studios", "x2": "jeux dans la série Lulu", "x3": "langues", "x4": "traceur sur ce site",
 
+"ix1": "Une maison de studios indépendants", "ix2": "Défiler", "ix3": "Du foyer", "ix4": "Chaque monde commence par une étincelle.",
+"ix5": "Moon Beam Studio · la nuit", "ix6": "Des mondes douillets avec Lulu.", "ix7": "Des jeux idle relaxants, à savourer à son rythme, hors ligne et sans compte.",
+"ix8": "Puis", "ix9": "le soleil se lève.", "ix10": "First Light · le jour", "ix11": "Des apps pour le travail et le quotidien.",
+"ix12": "Des outils clairs et fiables, qui font gagner du temps au lieu d'en prendre.", "ix14": "Une maison. Deux studios. Le même soin.",
+"cta1": "Créons quelque chose qui dure.", "cta2": "Un projet, un partenariat, une question ? Nous lisons chaque message.", "cta3": "Nous contacter",
+
 "e1": "Cette pièce est vide.", "e2": "La page que vous cherchez n'existe pas ou a été déplacée.", "e3": "Retour à la maison"
 }
 };

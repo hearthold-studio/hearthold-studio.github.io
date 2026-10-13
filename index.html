@@ -9,57 +9,55 @@
 <meta property="og:description" content="An independent house of studios. Games and apps crafted with care, built to last.">
 <meta property="og:image" content="https://hearthold-studio.github.io/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#07080d">
 <link rel="canonical" href="https://hearthold-studio.github.io/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Hearthold","url":"https://hearthold-studio.github.io/","logo":"https://hearthold-studio.github.io/img/hearthold.svg","subOrganization":[{"@type":"Organization","name":"Moon Beam Studio","url":"https://moonbeamstudio.github.io/"},{"@type":"Organization","name":"First Light"}]}</script>
-<link rel="icon" href="img/hearthold.svg?v=2" type="image/svg+xml">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=2">
-<link rel="stylesheet" href="style.css">
-<script src="i18n.js"></script>
-<script src="site.js"></script>
-<script src="motion.js" defer></script>
+<link rel="icon" href="/img/hearthold.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=2">
+<link rel="stylesheet" href="/style.css">
+<script type="importmap">{"imports":{"three":"/vendor/three/three.module.min.js","three/addons/":"/vendor/three/addons/"}}</script>
+<script src="/i18n.js"></script>
+<script src="/site.js"></script>
+<script src="/motion.js" defer></script>
+<script type="module">if (!document.documentElement.classList.contains('still')) import('/js/experience.js');</script>
 </head>
-<body>
+<body class="home">
 <header class="nav"></header>
-<main>
 
-<div class="hero-wrap">
-<div class="aura" aria-hidden="true"><i></i><i></i><i></i></div>
-<div class="wrap hero home">
-  <div>
-    <span class="eyebrow" data-i="h1">Independent house of studios · France</span>
-    <h1 data-i="h2">A warm hearth for <em>studios that make things to last.</em></h1>
-    <p class="lead" data-i="h3">Hearthold brings together small independent studios, each with its own craft: cozy games, useful apps. One house, the same care, the same honesty.</p>
-    <div class="btns">
-      <a class="btn solid" href="studios.html"><span data-i="h4">Meet our studios</span> →</a>
-      <a class="btn" href="catalogue.html" data-i="h5">See everything we make</a>
-    </div>
+<div class="sky"></div>
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="layer" aria-hidden="true">
+  <div class="intro">
+    <h1 aria-label="Hearthold"><span style="--i:0">H</span><span style="--i:1">e</span><span style="--i:2">a</span><span style="--i:3">r</span><span style="--i:4">t</span><span style="--i:5">h</span><span style="--i:6">o</span><span style="--i:7">l</span><span style="--i:8">d</span></h1>
+    <p data-i="ix1">An independent house of studios</p>
   </div>
-  <div class="emblem" aria-hidden="true">
-    <canvas></canvas>
-    <svg viewBox="0 0 200 200">
-      <defs><radialGradient id="g" cx=".5" cy=".62" r=".5"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient></defs>
-      <circle class="halo" cx="100" cy="122" r="90" fill="url(#g)"/>
-      <path class="arch" d="M48 168V98a52 52 0 0 1 104 0v70" pathLength="1"/>
-      <path class="arch" d="M34 168h132" pathLength="1"/>
-      <g class="fire">
-        <path class="f1" d="M100 70c15 18 27 30 27 48a27 27 0 0 1-54 0c0-12 6-21 12-27 0 9 3 15 9 18-3-15 0-27 6-39z"/>
-        <path class="f2" d="M100 106c6 6 12 12 12 19.5a12 12 0 0 1-24 0c0-6 3-9 6-12 0 3 3 6 6 6-1.5-4.8-1.2-9 0-13.5z"/>
-      </g>
-    </svg>
+  <span class="hint"><i></i><span data-i="ix2">Scroll</span></span>
+  <div class="flash"></div>
+  <div class="chap c" data-at=".11,.22"><span class="eyebrow" data-i="ix3">From the hearth</span><h2 data-i="ix4">Every world starts with a spark.</h2></div>
+  <div class="chap l" data-at=".28,.56">
+    <span class="eyebrow" data-i="ix5">Moon Beam Studio · by night</span>
+    <h2 data-i="ix6">Cozy worlds starring Lulu.</h2>
+    <p data-i="ix7">Relaxing idle games to enjoy at your own pace, offline, no account needed.</p>
+    <div class="games"><span data-game="0,.4">Lulu Park</span><span data-game=".4,.49">Lulu Museum</span><span data-game=".49,1">Lulu Zoo</span></div>
   </div>
+  <div class="chap c dawn" data-at=".57,.67"><span class="eyebrow" data-i="ix8">Then</span><h2 data-i="ix9">the sun rises.</h2></div>
+  <div class="chap r" data-at=".69,.87">
+    <span class="eyebrow" data-i="ix10">First Light · by day</span>
+    <h2 data-i="ix11">Apps for work and everyday life.</h2>
+    <p data-i="ix12">Clear, dependable tools that save time instead of taking it.</p>
+  </div>
+  <div class="chap c" data-at=".88,1.01"><span class="eyebrow">Hearthold</span><h2 data-i="ix14">One house. Two studios. The same care.</h2></div>
 </div>
-</div>
+<div class="story"></div>
 
-<div class="marquee" aria-hidden="true"><div><span data-i="m1">Craft</span>✦<span data-i="m2">Honesty</span>✦<span data-i="m3">Built to last</span>✦<span data-i="m4">Games</span>✦<span data-i="m5">Apps</span>✦<span data-i="m1">Craft</span>✦<span data-i="m2">Honesty</span>✦<span data-i="m3">Built to last</span>✦<span data-i="m4">Games</span>✦<span data-i="m5">Apps</span>✦</div></div>
+<main class="after">
+<div class="night still-hero"><div class="wrap hero">
+  <span class="eyebrow" data-i="h1">Independent house of studios · France</span>
+  <h1 data-i="h2">A warm hearth for <em>studios that make things to last.</em></h1>
+  <p class="lead" data-i="h3">Hearthold brings together small independent studios, each with its own craft: cozy games, useful apps. One house, the same care, the same honesty.</p>
+</div></div>
 
-<section class="stats-s"><div class="wrap stats">
-  <div><b data-count="2">2</b><span data-i="x1">studios</span></div>
-  <div><b data-count="3">3</b><span data-i="x2">games in the Lulu series</span></div>
-  <div><b data-count="7">7</b><span data-i="x3">languages</span></div>
-  <div><b data-count="0">0</b><span data-i="x4">trackers on this site</span></div>
-</div></section>
-
-<section class="alt"><div class="wrap">
+<section><div class="wrap">
   <div class="title">
     <span class="eyebrow" data-i="h6">Our studios</span>
     <h2 data-i="h7">Under one roof</h2>
@@ -67,19 +65,28 @@
   </div>
   <div class="studios">
     <a class="studio moon" href="https://moonbeamstudio.github.io/">
-      <img class="mark" src="img/moonbeam-logo.png" alt="">
+      <img class="mark" src="/img/moonbeam-logo.png" alt="">
       <span class="tag" data-i="h9">Games · by night</span>
       <h3>Moon Beam Studio</h3>
       <p data-i="h10">Cozy idle tycoon games starring Lulu, a curious puppy. Three worlds so far: a theme park, a museum and a zoo.</p>
       <span class="go"><span data-i="h11">Visit Moon Beam</span> →</span>
     </a>
-    <a class="studio dawn" href="studios.html#first-light">
-      <img class="mark" src="img/first-light.svg" alt="">
+    <a class="studio dawn" href="/studios.html#first-light">
+      <img class="mark" src="/img/first-light.svg" alt="">
       <span class="tag" data-i="h12">Apps · by day</span>
       <h3>First Light</h3>
       <p data-i="h13">Clear, reliable apps for work and everyday life. Tools that save time instead of taking it.</p>
       <span class="go"><span data-i="h14">Discover First Light</span> →</span>
     </a>
+  </div>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <div class="title"><span class="eyebrow">Moon Beam Studio</span><h2 data-i="c4">The Lulu series</h2></div>
+  <div class="apps">
+    <a class="app" href="https://moonbeamstudio.github.io/lulu-park.html"><img src="/img/park-icon.png" alt=""><div><h3>Lulu Park</h3><p data-i="c5">Build your dream amusement park, from a 1930s village fair all the way to the Moon.</p><span class="pill" data-i="c8">Coming soon · App Store</span></div></a>
+    <a class="app" href="https://moonbeamstudio.github.io/lulu-museum.html"><img src="/img/museum-icon.png" alt=""><div><h3>Lulu Museum</h3><p data-i="c6">Reopen an old museum whose exhibits come alive, from mummies to dinosaurs to robots.</p><span class="pill" data-i="c8">Coming soon · App Store</span></div></a>
+    <a class="app" href="https://moonbeamstudio.github.io/lulu-zoo.html"><img src="/img/zoo-icon.png" alt=""><div><h3>Lulu Zoo</h3><p data-i="c7">Turn an old animal refuge into a sanctuary across six regions of the world.</p><span class="pill" data-i="c8">Coming soon · App Store</span></div></a>
   </div>
 </div></section>
 
@@ -90,25 +97,28 @@
     <p class="muted" data-i="h17">Solid, honest, pleasant to use for years. That's the bar for every game and every app in the house.</p>
   </div>
   <div class="grid">
-    <div class="card"><h3 data-i="h18">Craft first</h3><p class="muted" data-i="h19">Small teams, carefully finished products. We'd rather make fewer things, and make them well.</p></div>
-    <div class="card"><h3 data-i="h20">Honest by design</h3><p class="muted" data-i="h21">No dark patterns, no forced ads, no account when none is needed. You always know what you pay for.</p></div>
-    <div class="card"><h3 data-i="h22">Made to last</h3><p class="muted" data-i="h23">Our games and apps keep being maintained and improved long after launch.</p></div>
-    <div class="card"><h3 data-i="h24">For everyone</h3><p class="muted" data-i="h25">Designed in France, available in several languages, built to be accessible to all.</p></div>
+    <div class="card"><span class="num">01</span><h3 data-i="h18">Craft first</h3><p class="muted" data-i="h19">Small teams, carefully finished products. We'd rather make fewer things, and make them well.</p></div>
+    <div class="card"><span class="num">02</span><h3 data-i="h20">Honest by design</h3><p class="muted" data-i="h21">No dark patterns, no forced ads, no account when none is needed. You always know what you pay for.</p></div>
+    <div class="card"><span class="num">03</span><h3 data-i="h22">Made to last</h3><p class="muted" data-i="h23">Our games and apps keep being maintained and improved long after launch.</p></div>
+    <div class="card"><span class="num">04</span><h3 data-i="h24">For everyone</h3><p class="muted" data-i="h25">Designed in France, available in several languages, built to be accessible to all.</p></div>
   </div>
 </div></section>
 
 <section class="alt"><div class="wrap">
-  <div class="title">
-    <span class="eyebrow" data-i="h26">Latest</span>
-    <h2 data-i="h27">News from the house</h2>
-  </div>
+  <div class="title"><span class="eyebrow" data-i="h26">Latest</span><h2 data-i="h27">News from the house</h2></div>
   <div class="news">
     <article class="post"><time datetime="2026-10" data-i="d1">October 2026</time><div><h3 data-i="p1t">Hearthold opens its doors</h3><p class="muted" data-i="p1">Moon Beam Studio becomes the first studio of the house, and First Light is born to make apps for work and everyday life.</p></div></article>
     <article class="post"><time datetime="2026-10" data-i="d1">October 2026</time><div><h3 data-i="p2t">Three Lulu games heading to the App Store</h3><p class="muted" data-i="p2">Lulu Park, Lulu Museum and Lulu Zoo are in App Store review. Android versions will follow.</p></div></article>
   </div>
-  <div class="btns"><a class="btn" href="news.html"><span data-i="h28">All news</span> →</a></div>
+  <div class="btns"><a class="btn" href="/news.html"><span data-i="h28">All news</span> →</a></div>
 </div></section>
 
+<div class="night"><div class="wrap" style="padding:120px 16px;text-align:center">
+  <span class="eyebrow" data-i="n5">Contact</span>
+  <h2 data-i="cta1">Let's make something that lasts.</h2>
+  <p class="lead" style="margin:0 auto" data-i="cta2">A project, a partnership, a question? We read every message.</p>
+  <div class="btns" style="justify-content:center"><a class="btn solid" href="/contact.html"><span data-i="cta3">Get in touch</span> →</a></div>
+</div></div>
 </main>
 <footer></footer>
 </body>

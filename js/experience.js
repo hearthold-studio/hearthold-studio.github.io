@@ -199,7 +199,7 @@ function apply(p, dt) {
   const [p0, t0, b0, i0] = SKY[i - 1], [p1, t1, b1, i1] = SKY[i], t = smooth(clamp((p - p0) / (p1 - p0)));
   const mix = (u, v) => u.map((x, k) => x + (v[k] - x) * t);
   sky.style.setProperty('--top', css(mix(t0, t1))); sky.style.setProperty('--bottom', css(mix(b0, b1)));
-  document.documentElement.style.setProperty('--ink', css(mix(i0, i1)));
+  document.documentElement.style.setProperty('--story-ink', css(mix(i0, i1)));
 
   // titre d'ouverture : s'efface vers le haut dès qu'on commence à défiler
   hint.style.visibility = p > .02 ? 'hidden' : 'visible';
