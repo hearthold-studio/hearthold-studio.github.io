@@ -272,3 +272,14 @@ footer .base { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(2
 .dts-caps p.on { opacity: 1; transform: none; filter: none; }
 .dts-caps p.big { max-width: 960px; font-size: clamp(1.9rem, 4.2vw, 3.2rem); letter-spacing: -.04em; }
 @media (max-width: 760px) { .dts { height: 420vh; } .dts-caps { bottom: max(3.5vh, 18px); } }
+
+/* captures de l'app : toutes visibles, sans défilement de côté */
+.shots { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(12px, 2vw, 24px); align-items: start; }
+.shots img { width: 100%; border-radius: 9% / 4.2%; box-shadow: 0 20px 44px -12px rgba(20,22,28,.22), 0 0 0 1px rgba(20,22,28,.06); }
+.shots img:nth-child(even) { margin-top: 36px; }
+@media (max-width: 760px) {
+  .shots { display: flex; flex-wrap: wrap; justify-content: center; }
+  .shots img { width: calc(50% - 8px); }
+  .shots img:nth-child(even) { margin-top: 0; }
+  .shots img:last-child { width: calc(50% - 8px); }
+}
