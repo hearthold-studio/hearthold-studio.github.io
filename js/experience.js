@@ -59,7 +59,7 @@ const sunL = new THREE.DirectionalLight('#ffc27a', 0); sunL.position.set(6, -2, 
 // ---------- téléphone ----------
 const loader = new THREE.TextureLoader();
 const tex = (n) => { const t = loader.load(`/img/screens/${n}.webp`); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
-const screens = { park: tex('park-1'), museum: tex('museum-2'), zoo: tex('zoo-2'), light: firstLightScreen() };
+const screens = { park: tex('park-1'), museum: tex('museum-2'), zoo: tex('zoo-2'), light: tex('deux-toits') };
 const mark = loader.load('/img/moonbeam-mark-mask.png');
 const phone = createPhone({ screen: screens.park, mark });
 const { screenMat, screen, z: front } = phone.userData;
@@ -69,30 +69,6 @@ const fadeScr = new THREE.Mesh(screen.geometry, fadeMat); fadeScr.position.z = f
 const rig = new THREE.Group(); rig.add(phone); scene.add(rig);
 const worlds = createWorlds(phone, { front, narrow: () => narrow });
 const hemi = new THREE.HemisphereLight('#dfe4ff', '#3a2030', 0); scene.add(hemi);
-
-// écran First Light dessiné en code (les apps sont en préparation)
-function firstLightScreen() {
-  const c = document.createElement('canvas'); c.width = 720; c.height = 1564;
-  const x = c.getContext('2d');
-  const bg = x.createLinearGradient(0, 0, 0, 1564); bg.addColorStop(0, '#fff8ec'); bg.addColorStop(1, '#ffe2b8');
-  x.fillStyle = bg; x.fillRect(0, 0, 720, 1564);
-  x.fillStyle = '#e8893a'; x.beginPath(); x.arc(360, 360, 110, Math.PI, 0); x.fill();
-  x.strokeStyle = '#e8893a'; x.lineWidth = 14; x.lineCap = 'round';
-  [[360, 200, 360, 160], [230, 250, 205, 222], [490, 250, 515, 222], [180, 330, 140, 330], [540, 330, 580, 330]].forEach(([a, b, c2, d]) => { x.beginPath(); x.moveTo(a, b); x.lineTo(c2, d); x.stroke(); });
-  x.strokeStyle = '#3b4a6b'; x.beginPath(); x.moveTo(170, 372); x.lineTo(550, 372); x.stroke();
-  x.fillStyle = '#2b2f45'; x.font = '700 64px -apple-system, Helvetica, sans-serif'; x.textAlign = 'center'; x.fillText('First Light', 360, 500);
-  x.font = '500 30px -apple-system, Helvetica, sans-serif'; x.fillStyle = '#6b6f85'; x.fillText('Good morning', 360, 552);
-  const card = (y, h, title, lines, accent) => {
-    x.fillStyle = 'rgba(255,255,255,.85)'; x.beginPath(); x.roundRect(60, y, 600, h, 36); x.fill();
-    x.fillStyle = accent; x.beginPath(); x.roundRect(96, y + 36, 64, 64, 18); x.fill();
-    x.fillStyle = '#2b2f45'; x.textAlign = 'left'; x.font = '700 32px -apple-system, Helvetica, sans-serif'; x.fillText(title, 184, y + 80);
-    x.fillStyle = '#d9dbe6'; lines.forEach((wd, i) => { x.beginPath(); x.roundRect(96, y + 132 + i * 40, wd, 18, 9); x.fill(); });
-  };
-  card(620, 260, 'Today', [460, 380, 300], '#e8893a');
-  card(910, 260, 'Projects', [420, 480, 260], '#3b4a6b');
-  card(1200, 220, 'Notes', [500, 340], '#f2b84b');
-  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
-}
 
 // ---------- le foyer de l'ouverture ----------
 const hearth = createHearth({ low: lowPower }); scene.add(hearth.group);

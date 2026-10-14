@@ -78,13 +78,13 @@ export function createWorlds(phone, { front, narrow }) {
     x.fillStyle = done ? '#e8893a' : 'rgba(43,47,69,.18)'; x.beginPath(); x.arc(70, y, 15, 0, 7); x.fill();
     x.fillStyle = done ? 'rgba(43,47,69,.45)' : '#2b2f45'; x.font = '600 28px -apple-system, Helvetica, sans-serif'; x.fillText(label, 100, y + 10);
   };
+  const pill = (x, y, color, label) => { x.fillStyle = color; x.beginPath(); x.roundRect(50, y, 412, 64, 32); x.fill(); x.fillStyle = '#fff'; x.font = '700 30px -apple-system, Helvetica, sans-serif'; x.fillText(label, 80, y + 42); };
+  // cartes de l'app Deux Toits (First Light) qui sortent de l'écran
   const cards = [
-    [card((x) => { x.fillText('Today', 50, 80); row(x, 140, true, 'Morning review'); row(x, 200, true, 'Send the quote'); row(x, 260, false, 'Call the workshop'); }), [-8.2, 4.2, 2.5], 5],
-    [card((x) => { x.fillText('Focus', 50, 80); x.font = '800 96px -apple-system, Helvetica, sans-serif'; x.fillStyle = '#e8893a'; x.fillText('25:00', 50, 210);
-      x.fillStyle = 'rgba(43,47,69,.15)'; x.beginPath(); x.roundRect(50, 260, 410, 18, 9); x.fill(); x.fillStyle = '#3b4a6b'; x.beginPath(); x.roundRect(50, 260, 250, 18, 9); x.fill(); }), [-7.8, -4.5, 4], 4.6],
-    [card((x) => { x.fillText('This week', 50, 80); [.4, .7, .55, .9, .65, .3, .8].forEach((v, i) => { x.fillStyle = i === 3 ? '#e8893a' : '#3b4a6b'; x.beginPath(); x.roundRect(60 + i * 60, 300 - v * 190, 36, v * 190, 10); x.fill(); }); }), [2.5, 9.8, -1], 4.6],
-    [card((x) => { x.fillText('Tomorrow', 50, 80); x.font = '600 28px -apple-system, Helvetica, sans-serif'; x.fillStyle = '#6b6f85';
-      ['09:00  Team call', '11:30  Site visit', '15:00  Invoices'].forEach((l, i) => x.fillText(l, 50, 150 + i * 60)); }), [1.5, -9.8, 3], 4.4],
+    [card((x) => { x.fillText('🦊  Léa', 50, 80); x.font = '600 26px -apple-system, Helvetica, sans-serif'; x.fillStyle = '#6b6f85'; x.fillText('Ce soir', 50, 140); pill(x, 170, '#E2702B', 'Chez Maman'); x.fillStyle = '#6b6f85'; x.font = '600 24px -apple-system, Helvetica, sans-serif'; x.fillText('Prochain échange : vendredi 18 h', 50, 290); }), [-8.2, 4.2, 2.5], 5],
+    [card((x) => { x.fillText('Le sac', 50, 80); row(x, 140, true, 'Doudou lapin'); row(x, 200, true, 'Carnet de santé'); row(x, 260, false, 'Tenue de judo'); }), [-7.8, -4.5, 4], 4.6],
+    [card((x) => { x.fillText('Octobre', 50, 80); const d = [1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0]; d.forEach((v, i) => { x.fillStyle = v ? '#E2702B' : '#3B6FD8'; x.beginPath(); x.roundRect(50 + (i % 7) * 60, 120 + Math.floor(i / 7) * 90, 46, 60, 12); x.fill(); }); }), [2.5, 9.8, -1], 4.6],
+    [card((x) => { x.fillText('Le solde', 50, 80); x.font = '800 72px -apple-system, Helvetica, sans-serif'; x.fillStyle = '#E2702B'; x.fillText('44,45 €', 50, 200); x.font = '600 26px -apple-system, Helvetica, sans-serif'; x.fillStyle = '#6b6f85'; x.fillText('Papa → Maman · cantine, judo', 50, 270); }), [1.5, -9.8, 3], 4.4],
   ].map(([map, pos, size], i) => {
     const mat = new THREE.SpriteMaterial({ map, transparent: true, opacity: 0, depthWrite: false, toneMapped: false });
     const s = new THREE.Sprite(mat); s.visible = false; root.add(s);

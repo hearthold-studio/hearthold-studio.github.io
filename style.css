@@ -185,3 +185,7 @@ footer .base { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(2
 .still .still-hero { display: block; }
 
 @media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .anim .rv { opacity: 1; transform: none; } }
+/* page d'une app */
+.app-hero { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: center; }
+.app-hero > img { width: 128px; height: 128px; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,.4); }
+@media (max-width: 640px) { .app-hero { grid-template-columns: 1fr; gap: 22px; } .app-hero > img { width: 92px; height: 92px; border-radius: 22px; } }
