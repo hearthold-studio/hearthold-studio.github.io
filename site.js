@@ -26,7 +26,7 @@
     '<div class="wrap"><div class="cols">' +
     '<div><a class="brand" href="/"><img src="/img/hearthold.svg?v=2" alt="" width="30" height="30">Hearthold</a>' +
     '<p style="margin-top:14px;max-width:380px" data-i="f1">An independent house of studios, based in France. Games and apps crafted with care, built to last.</p></div>' +
-    '<div><h4 data-i="f2">Our studios</h4><a href="https://moonbeamstudio.github.io/">Moon Beam Studio</a><a href="/studios.html#first-light">First Light</a></div>' +
+    '<div><h4 data-i="f2">Our studios</h4><a href="https://moonbeamstudio.github.io/">Moon Beam Studio</a><a href="https://firstlight-studio.github.io/">First Light</a></div>' +
     '<div><h4 data-i="f3">The house</h4><a href="/news.html" data-i="n3">News</a><a href="/press.html" data-i="n4">Press</a><a href="/contact.html" data-i="n5">Contact</a><a href="/legal.html" data-i="f4">Legal &amp; privacy</a></div>' +
     '</div><div class="base">© <span class="yr"></span> Hearthold · <span data-i="f5">Made in France</span></div></div>';
 
