@@ -189,3 +189,86 @@ footer .base { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(2
 .app-hero { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: center; }
 .app-hero > img { width: 128px; height: 128px; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,.4); }
 @media (max-width: 640px) { .app-hero { grid-template-columns: 1fr; gap: 22px; } .app-hero > img { width: 92px; height: 92px; border-radius: 22px; } }
+
+/* ================= page Deux Toits : la semaine entre deux toits (js/deux-toits.js) ================= */
+.dts { position: relative; height: 460vh; padding: 0; background: linear-gradient(180deg, #fff7ea 0, #fbe6c6 60%, #f9ddb2 100%); }
+.dts-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; perspective: 1600px; }
+.dts.static { height: auto; }
+.dts.static .dts-pin { position: relative; }
+.dts:not(.ready) .dts-pin > * { visibility: hidden; }
+.dts-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.dts-roof { fill: none; stroke-width: .215; stroke-linecap: round; stroke-linejoin: round; }
+.dts-roof.b { stroke: #3b6fd8; }
+.dts-roof.o { stroke: #e2702b; }
+.dts-dot { fill: #2b2f45; }
+.dts-trail { fill: none; stroke: url(#dtsTrail); stroke-width: 2.5; stroke-linecap: round; }
+
+/* le téléphone : générique, vert sauge, verre et reflet qui glisse quand il tourne */
+.dts-phone { position: absolute; left: 0; top: 0; width: var(--pw); height: var(--ph); transform-style: preserve-3d; will-change: transform, opacity; }
+.dts-body { position: absolute; inset: 0; border-radius: calc(var(--pw) * .155); background: linear-gradient(152deg, #cfdac9 0, #a7b9a3 34%, #8ea18b 70%, #7d907a 100%);
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.5), inset 0 -14px 30px rgba(45,62,45,.22), 0 60px 100px -36px rgba(110,72,28,.5), 0 24px 44px -24px rgba(40,52,40,.4); }
+.dts-key { position: absolute; right: calc(var(--pw) * -.012); width: calc(var(--pw) * .016); border-radius: 0 3px 3px 0; background: linear-gradient(90deg, #7f927c, #a9bba5); }
+.dts-key.a { top: 21%; height: 7%; } .dts-key.b { top: 31%; height: 12%; }
+.dts-screen { position: absolute; inset: calc(var(--pw) * .036); border-radius: calc(var(--pw) * .122); overflow: hidden; background: #f2f2f7; container-type: inline-size;
+  box-shadow: 0 0 0 calc(var(--pw) * .013) #15171c; color: #111; font-family: var(--sans); line-height: 1.25; text-align: left; }
+.dts-screen::before { content: ""; position: absolute; top: 3.2cqw; left: 50%; width: 3.4cqw; height: 3.4cqw; margin-left: -1.7cqw; border-radius: 50%; background: #0c0d10; z-index: 3; }
+.dts-screen::after { content: ""; position: absolute; inset: -20%; z-index: 4; pointer-events: none; transform: translateX(var(--sh, 0%));
+  background: linear-gradient(112deg, transparent 38%, rgba(255,255,255,.22) 48%, rgba(255,255,255,.06) 53%, transparent 62%); }
+.dts-status { display: flex; justify-content: space-between; align-items: center; padding: 3cqw 7cqw 0; height: 10cqw; font-size: 3.8cqw; }
+.dts-status span { width: 6.4cqw; height: 3cqw; border-radius: 1cqw; border: .45cqw solid #111; position: relative; }
+.dts-status span::after { content: ""; position: absolute; inset: .4cqw; right: 1.4cqw; border-radius: .4cqw; background: #111; }
+.dts-title { padding: 3.4cqw 5.5cqw 0; font-size: 8.6cqw; font-weight: 800; letter-spacing: -.03em; }
+.dts-date { padding: 1cqw 5.5cqw 3.4cqw; font-size: 3.9cqw; color: #8a8a90; }
+.dts-kid, .dts-bag, .dts-today { margin: 0 4cqw; background: #fff; border-radius: 5.5cqw; padding: 4.4cqw; }
+.dts-who { display: flex; align-items: center; gap: 2.6cqw; font-size: 5.6cqw; margin-bottom: 3.4cqw; }
+.dts-who span { font-size: 8.4cqw; line-height: 1; }
+.dts-band { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 3.4cqw 4cqw; border-radius: 3.8cqw; color: #fff; font-size: 4.1cqw; background: #e2702b; overflow: hidden; isolation: isolate; }
+.dts-band::before { content: ""; position: absolute; inset: 0; z-index: -1; background: #3b6fd8; opacity: 0; transition: opacity .7s var(--ease); }
+.dts-band span { opacity: .88; }
+.dts-band b { grid-area: 1 / 2; font-size: 4.4cqw; }
+.dts-next { display: flex; gap: 2.8cqw; align-items: center; margin: 3.6cqw 0 3.4cqw; font-size: 3.7cqw; }
+.dts-next > i { flex: none; width: 7cqw; height: 7cqw; border-radius: 50%; display: grid; place-items: center; font-style: normal; color: #fff; background: #3b6fd8; font-size: 3.8cqw; transition: background .7s var(--ease); }
+.dts-next > span { display: grid; }
+.dts-next b { grid-area: 1 / 1; color: #e2702b; }
+.dts-next small { grid-area: 2 / 1; font-size: 3.2cqw; color: #e9a37b; }
+.dts-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1.4cqw; }
+.dts-week i { height: 2.2cqw; border-radius: 9px; background: #e2702b; opacity: .35; transition: opacity .4s, transform .4s var(--ease); }
+.dts-week i.p { background: #3b6fd8; }
+.dts-week i.now { opacity: 1; transform: scaleY(1.7); }
+.dts-swap { display: grid; margin-top: 3cqw; }
+.dts-swap > * { grid-area: 1 / 1; align-self: start; font-size: 3.9cqw; transition: opacity .5s var(--ease), transform .7s var(--ease); }
+.dts-today > div { font-weight: 700; margin-bottom: 1.4cqw; }
+.dts-today p { display: flex; gap: 2.6cqw; align-items: center; margin: 0; padding: 1.6cqw 0; }
+.dts-today p + p { border-top: 1px solid #ededf0; }
+.dts-today i { font-style: normal; font-size: 5cqw; }
+.dts-today span { display: grid; }
+.dts-today small { font-size: 3.1cqw; color: #8a8a90; }
+.dts-screen.bag .dts-today { opacity: 0; transform: translateY(-3cqw) scale(.97); }
+.dts-bag { opacity: 0; transform: translateY(6cqw) scale(.97); }
+.dts-sum { display: flex; justify-content: space-between; margin: 3cqw 4cqw 0; background: #fff; border-radius: 5.5cqw; padding: 4cqw 4.4cqw; font-size: 3.7cqw; }
+.dts-sum b { color: #2fa36b; }
+.dts-svg.front { pointer-events: none; }
+.dts-tabs { position: absolute; left: 3cqw; right: 3cqw; bottom: 3.5cqw; display: flex; justify-content: space-around; padding: 3.2cqw 1cqw; border-radius: 99px; background: rgba(255,255,255,.85); box-shadow: 0 1cqw 4cqw rgba(0,0,0,.06); font-size: 2.6cqw; color: #333; }
+.dts-tabs b { color: #e2702b; }
+.dts-bag > div { font-weight: 700; margin-bottom: 2cqw; }
+.dts-bag ul { list-style: none; margin: 0; padding: 0; }
+.dts-bag li { display: flex; align-items: center; gap: 2.6cqw; padding: 1.5cqw 0; color: #333; transition: color .4s; }
+.dts-bag li span { width: 4.4cqw; height: 4.4cqw; border-radius: 50%; border: .5cqw solid #c7c7cc; position: relative; transition: background .35s, border-color .35s; }
+.dts-bag li.ok { color: #9a9aa0; }
+.dts-bag li.ok span { background: #2fa36b; border-color: #2fa36b; }
+.dts-bag li.ok span::after { content: ""; position: absolute; left: 1.05cqw; top: .35cqw; width: 1.1cqw; height: 2.1cqw; border: solid #fff; border-width: 0 .6cqw .6cqw 0; transform: rotate(45deg); }
+.dts-screen.bag .dts-bag { opacity: 1; transform: none; }
+/* Maman / Papa : on montre l'un ou l'autre */
+.dts-screen .p:not(i) { opacity: 0; }
+.dts-band b, .dts-next b, .dts-next small { transition: opacity .5s var(--ease); }
+.dts-screen.papa .p:not(i) { opacity: 1; } .dts-screen.papa .m:not(i) { opacity: 0; }
+.dts-screen.papa .dts-band::before { opacity: 1; }
+.dts-screen.papa .dts-next > i { background: #e2702b; }
+
+/* légendes : une à la fois, en bas */
+.dts-caps { position: absolute; left: 16px; right: 16px; bottom: max(5vh, 28px); display: grid; text-align: center; color: #2b2f45; pointer-events: none; }
+.dts-caps p { grid-area: 1 / 1; align-self: end; margin: 0 auto; max-width: 840px; font-size: clamp(1.25rem, 2.3vw, 1.75rem); font-weight: 700; letter-spacing: -.025em; line-height: 1.2;
+  opacity: 0; transform: translateY(14px); filter: blur(6px); transition: opacity .7s var(--ease), transform .9s var(--ease), filter .7s var(--ease); }
+.dts-caps p.on { opacity: 1; transform: none; filter: none; }
+.dts-caps p.big { max-width: 960px; font-size: clamp(1.9rem, 4.2vw, 3.2rem); letter-spacing: -.04em; }
+@media (max-width: 760px) { .dts { height: 420vh; } .dts-caps { bottom: max(3.5vh, 18px); } }
