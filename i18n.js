@@ -15,7 +15,7 @@ window.I18N = {
 "h10": "Des jeux de gestion idle douillets avec Lulu, une petite chienne curieuse. Trois mondes pour l'instant : un parc d'attractions, un musée et un zoo.",
 "h11": "Visiter Moon Beam",
 "h12": "Apps · le jour",
-"h13": "Des apps claires et fiables pour la vie de tous les jours. Première app : Deux Toits, pour les familles à deux maisons.",
+"h13": "Des apps claires et fiables pour la vie de tous les jours : Deux Toits, pour les familles à deux maisons, et Lulu Doku, un casse-tête quotidien avec Lulu.",
 "h14": "Découvrir First Light",
 "h15": "Ce en quoi nous croyons", "h16": "Construit comme un beau meuble",
 "h17": "Solide, honnête, agréable à utiliser pendant des années. C'est l'exigence de chaque jeu et de chaque app de la maison.",
@@ -86,12 +86,12 @@ window.I18N = {
 "ix1": "Une maison de studios indépendants", "ix2": "Défiler", "ix3": "Du foyer", "ix4": "Chaque monde commence par une étincelle.",
 "ix5": "Moon Beam Studio · la nuit", "ix6": "Des mondes douillets avec Lulu.", "ix7": "Des jeux idle relaxants, à savourer à son rythme, hors ligne et sans compte.",
 "ix8": "Puis", "ix9": "le soleil se lève.", "ix10": "First Light · le jour", "ix11": "Des apps pour le travail et le quotidien.",
-"ix12": "À commencer par Deux Toits : la garde alternée, sereine.", "ix14": "Une maison. Deux studios. Le même soin.",
+"ix12": "À commencer par Deux Toits, la garde alternée sereine, et Lulu Doku, le casse-tête du matin.", "ix14": "Une maison. Deux studios. Le même soin.",
 "cta1": "Créons quelque chose qui dure.", "cta2": "Un projet, un partenariat, une question ? Nous lisons chaque message.", "cta3": "Nous contacter",
 
-"c16": "La garde alternée, sereine : un seul calendrier, le sac qui voyage, les dépenses et la santé, partagés entre les foyers.", "c17": "D'autres apps en route",
-"s21": "Première app : <b>Deux Toits</b>, pour les parents séparés en garde alternée.", "s22": "Découvrir Deux Toits",
-"p3t": "First Light dévoile Deux Toits", "p3": "La première app First Light aide les parents séparés à vivre la garde alternée sereinement : un calendrier calculé d'après le jugement et les vacances scolaires, le sac qui voyage, les dépenses et la santé partagées. <a href=\"deux-toits.html\">Découvrir Deux Toits</a>",
+"c18": "Le casse-tête du matin : une grille de logique par jour, la même pour tout le monde, à résoudre avec Lulu. Un jeu Lulu × First Light.", "c16": "La garde alternée, sereine : un seul calendrier, le sac qui voyage, les dépenses et la santé, partagés entre les foyers.", "c17": "D'autres apps en route",
+"s21": "Premières apps : <b>Deux Toits</b>, pour les parents séparés en garde alternée, et <b>Lulu Doku</b>, un casse-tête quotidien avec Lulu, la mascotte de Moon Beam.", "s23": "Découvrir Lulu Doku", "s22": "Découvrir Deux Toits",
+"p4t": "Lulu rejoint First Light dans Lulu Doku", "p4": "Le chiot de Moon Beam rencontre le matin de First Light : Lulu Doku est un casse-tête de logique quotidien, la même grille pour tout le monde chaque matin, et Lulu qui explique chaque déduction. <a href=\"https://firstlight-studio.github.io/lulu-doku.html\">Découvrir Lulu Doku</a>", "p3t": "First Light dévoile Deux Toits", "p3": "La première app First Light aide les parents séparés à vivre la garde alternée sereinement : un calendrier calculé d'après le jugement et les vacances scolaires, le sac qui voyage, les dépenses et la santé partagées. <a href=\"deux-toits.html\">Découvrir Deux Toits</a>",
 
 "e1": "Cette pièce est vide.", "e2": "La page que vous cherchez n'existe pas ou a été déplacée.", "e3": "Retour à la maison"
 }
